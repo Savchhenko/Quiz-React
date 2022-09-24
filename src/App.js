@@ -1,8 +1,14 @@
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
+
 function App() {
   return (
-    <div>
+    <Router>
       <h1>Hello</h1>
-    </div>
+    </Router>
   );
 }
 
