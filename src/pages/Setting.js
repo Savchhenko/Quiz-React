@@ -6,11 +6,8 @@ import useAxios from "../hooks/useAxios";
 
 const Setting = () => {
     const { response, error, loading } = useAxios({ url: "api_category.php"});
+    console.log(response);
     
-    const handleSubmit = (e) => {
-        e.preventDefault();
-    };
-
     if (loading) {
         return (
             <Box mt={20}>
@@ -18,14 +15,36 @@ const Setting = () => {
             </Box>
         )
     }
+    if (error) {
+        return (
+            <Typography variant="h6" mt={20} color="red">
+                Something Went Wrong
+            </Typography>
+        )
+    }
+
+    const difficultyOptions = [
+        { id: "easy", name: "Easy" },
+        { id: "medium", name: "Medium" },
+        { id: "hard", name: "Hard" },
+    ];
+
+    const typeOptions = [
+        { id: "multiple", name: "Multiple Choise"}, 
+        { id: "boolean", name: "True/False"}
+    ];
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+    };
 
     return (
         <>
             <Typography variant="h2" fontWeight="bold">Quiz App</Typography>
             <form onSubmit={handleSubmit}>
-                <SelectField label="Category"/>
-                <SelectField label="Difficulty"/>
-                <SelectField label="Type"/>
+                <SelectField options={response.trivia_categories} label="Category"/>
+                <SelectField options={difficultyOptions} label="Difficulty"/>
+                <SelectField options={typeOptions} label="Type"/>
                 <TextFieldComp />
                 <Box mt={3} width="100%">
                     <Button fullWidth variant="contained" type="submit">
