@@ -2,8 +2,10 @@ import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import SelectField from "../components/SelectField";
 import TextFieldComp from "../components/TextFieldComp";
+import useAxios from "../hooks/useAxios";
 
 const Setting = () => {
+    const { response, error, loading } = useAxios({ url: "api_category"});
     const handleSubmit = (e) => {
         e.preventDefault();
     };
