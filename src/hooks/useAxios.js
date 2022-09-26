@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-axios.defaults.baseURL = "https://opentdb.com/";
+axios.defaults.baseURL = "https://opentdb.com";
 
 const useAxios = ({ url }) => {
 
@@ -13,14 +13,14 @@ const useAxios = ({ url }) => {
         const fetchData = () => {
             axios
                 .get(url)
-                .then(res => setResponse(res.data))
-                .catch(err => setError(err))
+                .then((res) => setResponse(res.data))
+                .catch((err) => setError(err))
                 .finally(() => setLoading(false))
         };
         fetchData();
     }, [url]);
 
-    return { response, error, loading};
+    return { response, error, loading };
 };
 
 export default useAxios;

@@ -6,7 +6,7 @@ import TextFieldComp from "../components/TextFieldComp";
 import useAxios from "../hooks/useAxios";
 
 const Setting = () => {
-    const { response, error, loading } = useAxios({ url: "api_category.php"});
+    const { response, error, loading } = useAxios({ url: "/api_category.php" });
     const navigate = useNavigate()
     
     if (loading) {
@@ -21,7 +21,7 @@ const Setting = () => {
             <Typography variant="h6" mt={20} color="red">
                 Something Went Wrong
             </Typography>
-        )
+        );
     }
 
     const difficultyOptions = [
