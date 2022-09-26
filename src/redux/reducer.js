@@ -33,7 +33,7 @@ const reducer = (state = initialState, action) => {
         case CHANGE_SCORE:
             return {
                 ...state, 
-                question_score: action.payload
+                score: action.payload
             };
         default: 
             return state;
