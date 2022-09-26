@@ -1,9 +1,11 @@
 import { Button, CircularProgress, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useAxios from "../hooks/useAxios";
+import { handleScoreChange } from "../redux/actions";
 
 // генерирует число от 1 до максимальной границы - amount_of_questions
 const getRandomInt = (max) => {
@@ -16,10 +18,11 @@ const Questions = () => {
         question_difficulty,
         question_type,
         amount_of_questions,
-        score
+        score,
     } = useSelector((state) => state);
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     let apiUrl = `/api.php?amount=${amount_of_questions}`;
 
@@ -47,7 +50,7 @@ const Questions = () => {
                 0,
                 question.correct_answer
             );
-            setOptions(answers)
+            setOptions(answers);
         }
     }, [response, questionIndex]);
 
@@ -59,7 +62,14 @@ const Questions = () => {
         );
     }
 
-    const handleClickAnswer = () => {
+    // увеличивает индекс вопроса на 1
+    // и если дошли до максимума, то по клику на ответ открывает финальную страницу
+    const handleClickAnswer = (e) => {
+        const question = response.results[questionIndex];
+        if (e.target.textContent === question.correct_answer) {
+            dispatch(handleScoreChange(score + 1));
+        }
+
         if (questionIndex + 1 < response.results.length) {
             setQuestionIndex(questionIndex + 1);
         } else {
@@ -76,9 +86,11 @@ const Questions = () => {
                     <Button onClick={handleClickAnswer} variant="contained">{data}</Button>
                 </Box>
             ))}
-            <Box mt={5}>Score: {score} / {response.results.length}</Box>
+            <Box mt={5}>
+                Score: {score} / {response.results.length}
+            </Box>
         </Box>
-    )
+    );
 };
 
 export default Questions;
